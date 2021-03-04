@@ -41,7 +41,7 @@ namespace CrawlPrePatcher
                 }
                 if(def.Name == "Player")
                 {
-
+                    def.NestedTypes.First(e => e.Name == "EvolveCostOverride").IsPublic = true;
                     /*AssemblyDefinition systemAssembly = AssemblyDefinition.ReadAssembly(BepInEx.Paths.ManagedPath + "\\System.dll");
                     MethodReference methref = systemAssembly.MainModule.Types.Where(e=>e.Name.StartsWith("SerializableAttribute")).FirstOrDefault().
                     CustomAttribute attr = new CustomAttribute()*/

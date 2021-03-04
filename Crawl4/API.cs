@@ -41,18 +41,29 @@ namespace CrawlAPI
                 if (!objList.Contains(i.GetType()))
                 {
                     objList.Add(i.GetType());
-                    //Console.WriteLine(i.GetType());
+                    Console.WriteLine(i.GetType());
                 }
             }
-            Player[] monsters = (Player[])Resources.FindObjectsOfTypeAll(typeof(Player));
+            //SystemDeity bigDeity = (SystemDeity)Resources.FindObjectsOfTypeAll(typeof(SystemDeity)).FirstOrDefault();
+            On.SystemMain.Awake += (a, b) => {
+                foreach (Deity i in SystemDeity.GetDeities())
+                {
+                    Console.WriteLine(i);
+                }
+                CustomMonster monst = new CustomMonster();
+                monst.SetToDefaults();
+                MonsterAPI.AddMonster(monst);
+            };
+
+            /*Deity[] deities = (Deity[])Resources.FindObjectsOfTypeAll(typeof(UnityEngine.));
             foreach (Player i in monsters)
             {
                 //Console.WriteLine(i.name);
-                if(i.name == "Hero")
+                if (i.name == "Hero")
                 {
-                    APIHelpers.PrintPlayer(i);   
+                    APIHelpers.PrintPlayer(i);
                 }
-            }
+            }*/
             /*[] weapons = (Weapon[])Resources.FindObjectsOfTypeAll(typeof(Weapon));
             foreach (Weapon i in array)
             {
@@ -67,6 +78,7 @@ namespace CrawlAPI
         public static void Init()
         {
             monsters = (Player[])Resources.FindObjectsOfTypeAll(typeof(Player));
+
         }
 
         public static Player GetMonster(string monsterName) //this does not work with mod added monsters!
@@ -74,6 +86,42 @@ namespace CrawlAPI
             return monsters.Where(e => e.name == "EnemySkeletonPirate").FirstOrDefault();
         }
 
+        public static void AddMonster(CustomMonster monst)
+        {
+            Deity bart = SystemDeity.GetDeity(0);
+            GameObject[] startingMonsters = bart.GetStartingMonsters();
+
+            Player p = startingMonsters[0].GetComponent<Player>();
+            //a.SetActive(true);
+            foreach (var field in monst.GetType().GetFields())
+            {
+                Console.WriteLine(field.Name);
+                FieldInfo fldInfo = p.GetType().GetField(field.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                if (fldInfo == null)
+                {
+                    continue;
+                }
+                if (fldInfo.Name == "m_evolveToCostOverride")
+                {
+                    Player.EvolveCostOverride[] e = EvolveCostOverride.convert((EvolveCostOverride[])field.GetValue(monst));
+
+                    fldInfo.SetValue(p, e);
+                }
+                else
+                {
+                    try
+                    {
+                        fldInfo.SetValue(p, field.GetValue(monst));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        fldInfo.SetValue(p, null);
+                    }
+                }
+            }
+            bart.GetType().GetField("m_startingMonsters", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(bart, startingMonsters);
+        }
         public class EvolveCostOverride
         {
             public EvolveCostOverride(GameObject evolveTo, float _price = 0)
@@ -81,6 +129,37 @@ namespace CrawlAPI
                 price = _price;
                 m_evolveTo = evolveTo;
             }
+            public static implicit operator Player.EvolveCostOverride(EvolveCostOverride e)
+            {
+                var eo = new Player.EvolveCostOverride();
+                eo.m_evolveTo = e.m_evolveTo;
+                eo.price = e.price;
+                return eo;
+            }
+            public static Player.EvolveCostOverride[] convert(EvolveCostOverride[] e)
+            {
+                var eoa = new Player.EvolveCostOverride[e.Length];
+                for (int i = 0; i < eoa.Length; i++)
+                {
+                    var eo = new Player.EvolveCostOverride();
+                    eo.m_evolveTo = e[i].m_evolveTo;
+                    eo.price = e[i].price;
+                    eoa[i] = eo;
+                }
+                return eoa;
+            }
+            /*public static implicit operator Player.EvolveCostOverride[](EvolveCostOverride[] e)
+            {
+                var eoa = new Player.EvolveCostOverride[e.Length];
+                for (int i = 0; i < eoa.Length; i++)
+                {
+                    var eo = new Player.EvolveCostOverride();
+                    eo.m_evolveTo = e[i].m_evolveTo;
+                    eo.price = e[i].price;
+                    eoa[i] = eo;
+                }
+                return eoa;
+            }*/
             public GameObject m_evolveTo;
             public float price;
         }
@@ -90,32 +169,41 @@ namespace CrawlAPI
     {
         public CustomMonster()
         {
-
+            
         }
 
         public void SetToDefaults()
         {
-            Player hero = MonsterAPI.GetMonster("Hero");
-            m_evolveTo = new Player[] { MonsterAPI.GetMonster("EnemySkeletonPirate"), MonsterAPI.GetMonster("EnemyGnome")};
+            Player hero = MonsterAPI.GetMonster("EnemyGhoul");
+            m_evolveTo = new Player[] { MonsterAPI.GetMonster("EnemyGnome"), MonsterAPI.GetMonster("EnemyGnome")};
             m_evolveToCostOverride = new MonsterAPI.EvolveCostOverride[]{
-                new MonsterAPI.EvolveCostOverride(MonsterAPI.GetMonster("EnemySkeletonPirate").gameObject),
+                new MonsterAPI.EvolveCostOverride(MonsterAPI.GetMonster("EnemyGnome").gameObject),
                 new MonsterAPI.EvolveCostOverride(MonsterAPI.GetMonster("EnemyGnome").gameObject)
                 };
-            m_animationIdle = (exSpriteAnimClip)hero.GetType().GetField("m_animationIdle").GetValue(hero);
-            m_animationRun = (exSpriteAnimClip)hero.GetType().GetField("m_animationRun").GetValue(hero);
-            m_animationDead = (exSpriteAnimClip)hero.GetType().GetField("m_animationDead").GetValue(hero);
-            m_animationKnockback = (exSpriteAnimClip)hero.GetType().GetField("m_animationKnockback").GetValue(hero);
-            m_animationStatue = (exSpriteAnimClip)hero.GetType().GetField("m_animationStatue").GetValue(hero);
-            m_shadowPrefab = (PlayerShadow)hero.GetType().GetField("m_shadowPrefab").GetValue(hero);
-            m_spawnOnHit = (DamageEffectData[])hero.GetType().GetField("m_spawnOnHit").GetValue(hero);
-            m_spawnOnDeath = (DamageEffectData[])hero.GetType().GetField("m_spawnOnDeath").GetValue(hero);
+            m_animationIdle = (exSpriteAnimClip)hero.GetType().GetField("m_animationIdle", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_animationRun = (exSpriteAnimClip)hero.GetType().GetField("m_animationRun", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_animationDead = (exSpriteAnimClip)hero.GetType().GetField("m_animationDead", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_animationKnockback = (exSpriteAnimClip)hero.GetType().GetField("m_animationKnockback", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_animationStatue = (exSpriteAnimClip)hero.GetType().GetField("m_animationStatue", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_shadowPrefab = (PlayerShadow)hero.GetType().GetField("m_shadowPrefab", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_spawnOnHit = (DamageEffectData[])hero.GetType().GetField("m_spawnOnHit", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_spawnOnDeath = (DamageEffectData[])hero.GetType().GetField("m_spawnOnDeath", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
 
-            m_attackOrderType = (Attacks.eAttackOrderType)hero.GetType().GetField("m_attackOrderType").GetValue(hero);
-            m_comboResetTime = (float)hero.GetType().GetField("m_comboResetTime").GetValue(hero);
+            m_attackOrderType = (Attacks.eAttackOrderType)hero.GetType().GetField("m_attackOrderType", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_comboResetTime = (float)hero.GetType().GetField("m_comboResetTime", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
             m_showDirectionIndicator = true;
-            m_hasSpecialAttack = (bool)hero.GetType().GetField("m_hasSpecialAttack").GetValue(hero);
-            m_specialAttack = (AttackData)hero.GetType().GetField("m_specialAttack").GetValue(hero);
+            m_hasSpecialAttack = (bool)hero.GetType().GetField("m_hasSpecialAttack", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_specialAttack = (AttackData)hero.GetType().GetField("m_specialAttack", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_attackPowerupPrefab = (Powerup)hero.GetType().GetField("m_attackPowerupPrefab", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_holdToAim = true;
 
+            m_knockbackCancelsAttack = true;
+
+            m_soundHit = (AudioCue)hero.GetType().GetField("m_soundHit", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_soundDie = (AudioCue)hero.GetType().GetField("m_soundDie", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+
+            m_portraitFlipped = (bool)hero.GetType().GetField("m_portraitFlipped", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
+            m_portraitAnim = (exSpriteAnimClip)hero.GetType().GetField("m_portraitAnim", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).GetValue(hero);
         }
         //Type
         public bool m_isHero = false;

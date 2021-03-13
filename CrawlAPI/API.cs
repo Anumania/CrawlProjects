@@ -41,14 +41,14 @@ namespace CrawlAPI
                 if (!objList.Contains(i.GetType()))
                 {
                     objList.Add(i.GetType());
-                    Console.WriteLine(i.GetType());
+                    //Console.WriteLine(i.GetType());
                 }
             }
             //SystemDeity bigDeity = (SystemDeity)Resources.FindObjectsOfTypeAll(typeof(SystemDeity)).FirstOrDefault();
             On.SystemMain.Awake += (a, b) => {
                 foreach (Deity i in SystemDeity.GetDeities())
                 {
-                    Console.WriteLine(i);
+                    //Console.WriteLine(i);
                 }
                 CustomMonster monst = new CustomMonster();
                 monst.SetToDefaults();
@@ -95,7 +95,7 @@ namespace CrawlAPI
             //a.SetActive(true);
             foreach (var field in monst.GetType().GetFields())
             {
-                Console.WriteLine(field.Name);
+                //Console.WriteLine(field.Name);
                 FieldInfo fldInfo = p.GetType().GetField(field.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                 if (fldInfo == null)
                 {
@@ -120,6 +120,7 @@ namespace CrawlAPI
                     }
                 }
             }
+            APIHelpers.PrintPlayer(p);
             bart.GetType().GetField("m_startingMonsters", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(bart, startingMonsters);
         }
         public class EvolveCostOverride
@@ -172,6 +173,21 @@ namespace CrawlAPI
             
         }
 
+        public override string ToString()
+        {
+            FieldInfo[] fieldInfos = this.GetType().GetFields();
+            foreach(FieldInfo info in fieldInfos)
+            {
+                if(info.FieldType == typeof(exSpriteAnimClip))
+                {
+                    
+                }
+                else
+                {
+
+                }
+            }
+        }
         public void SetToDefaults()
         {
             Player hero = MonsterAPI.GetMonster("EnemyGhoul");

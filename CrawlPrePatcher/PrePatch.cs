@@ -27,26 +27,14 @@ namespace CrawlPrePatcher
                 if (def.Namespace == "")
                 {
                     baseTypes.Add(def);
-                    foreach (MethodDefinition methdef in def.Methods) //make all unity functions public so that monomod hookgen can use them.
+                    foreach (MethodDefinition methdef in def.Methods)
                     {
-                        foreach (string str in UnityFunctions)
-                        {
-                            if (methdef.Name == str)
-                            {
-                                methdef.IsPrivate = false;
-                                break;
-                            }
-                        }
+                        methdef.IsPrivate = false;
                     }
-                }
-                if(def.Name == "Player")
-                {
-                    def.NestedTypes.First(e => e.Name == "EvolveCostOverride").IsPublic = true;
-                    /*AssemblyDefinition systemAssembly = AssemblyDefinition.ReadAssembly(BepInEx.Paths.ManagedPath + "\\System.dll");
-                    MethodReference methref = systemAssembly.MainModule.Types.Where(e=>e.Name.StartsWith("SerializableAttribute")).FirstOrDefault().
-                    CustomAttribute attr = new CustomAttribute()*/
-                    //def.Attributes = TypeAttributes.Serializable; //mistake
-
+                    foreach (FieldDefinition fielddef in def.Fields)
+                    {
+                        fielddef.IsPrivate = false;
+                    }
                 }
             }
 

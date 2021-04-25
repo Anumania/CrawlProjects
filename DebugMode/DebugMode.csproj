@@ -57,7 +57,7 @@
     </Reference>
     <Reference Include="CrawlAPI">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\plugins\CrawlAPI\CrawlAPI.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ex2D.Runtime">
       <HintPath>..\lib\ex2D.Runtime.dll</HintPath>
@@ -69,7 +69,7 @@
     </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>..\lib\MMHOOK_Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>..\lib\Mono.Cecil.dll</HintPath>

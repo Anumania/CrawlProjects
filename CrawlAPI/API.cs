@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 
+
 namespace CrawlAPI
 {
     [BepInPlugin("org.anumania.plugins.crawlapi", "CrawlAPI", "1.0.0.0")]
@@ -54,6 +55,19 @@ namespace CrawlAPI
                 CustomMonster monst = new CustomMonster();
                 monst.SetToDefaults();
                 MonsterAPI.AddMonster(monst);
+            };
+
+            On.SystemDebug.OnGUI += (a, b) =>
+            {
+                BotHero obj = FindObjectOfType<BotHero>();
+                if (obj != null)
+                {
+                    GUI.Label(new Rect(0, 0, 100, 20), obj.get);
+                }
+                else
+                {
+                    GUI.Label(new Rect(0, 0, 100, 20), "nah");
+                }
             };
             /*Deity[] deities = (Deity[])Resources.FindObjectsOfTypeAll(typeof(UnityEngine.));
             foreach (Player i in monsters)

@@ -24,16 +24,31 @@ namespace CrawlPrePatcher
             Collection<TypeDefinition> col = assembly.MainModule.Types;
             foreach(TypeDefinition def in col)
             {
-                if (def.Namespace == "")
+                if (def.Namespace == "" && def.Name != "<PrivateImplementationDetails>")
                 {
                     baseTypes.Add(def);
                     foreach (MethodDefinition methdef in def.Methods)
                     {
-                        methdef.IsPrivate = false;
+                        methdef.IsPublic = true;
                     }
-                    foreach (FieldDefinition fielddef in def.Fields)
+                    if(def.Name == "BotHero") //
                     {
-                        fielddef.IsPrivate = false;
+                        //Console.WriteLine(def.IsSerializable);
+                        foreach (FieldDefinition fielddef in def.Fields)
+                        {
+                            if (!def.IsSerializable || def.CustomAttributes.Where(e=>e.AttributeType.Name == "SerializeField").Count() != 0)
+                            {
+                                //Console.WriteLine(fielddef.Name);
+                                fielddef.IsPublic = true;
+                            }
+                        }
+                    }
+                    else if(def.Name == "Player")
+                    {
+                        foreach(TypeDefinition typedef in def.NestedTypes)
+                        {
+                            typedef.IsPublic = true;
+                        }
                     }
                 }
             }

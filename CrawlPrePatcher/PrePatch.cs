@@ -31,21 +31,21 @@ namespace CrawlPrePatcher
                     {
                         methdef.IsPublic = true;
                     }
-                    if(def.Name == "BotHero") //
+                    if (def.Name == "BotHero") //
                     {
                         //Console.WriteLine(def.IsSerializable);
                         foreach (FieldDefinition fielddef in def.Fields)
                         {
-                            if (!def.IsSerializable || def.CustomAttributes.Where(e=>e.AttributeType.Name == "SerializeField").Count() != 0)
+                            if (!def.IsSerializable || def.CustomAttributes.Where(e => e.AttributeType.Name == "SerializeField").Count() != 0)
                             {
                                 //Console.WriteLine(fielddef.Name);
                                 fielddef.IsPublic = true;
                             }
                         }
                     }
-                    else if(def.Name == "Player")
+                    else if (def.Name == "Player")
                     {
-                        foreach(TypeDefinition typedef in def.NestedTypes)
+                        foreach (TypeDefinition typedef in def.NestedTypes)
                         {
                             typedef.IsPublic = true;
                         }

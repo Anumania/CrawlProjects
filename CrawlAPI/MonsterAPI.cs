@@ -55,8 +55,8 @@ namespace CrawlAPI
                     }
                 }
             }
-            APIHelpers.PrintPlayer(p);
-            bart.GetType().GetField("m_startingMonsters", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(bart, startingMonsters);
+            //APIHelpers.PrintPlayer(p);
+            //bart.GetType().GetField("m_startingMonsters", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(bart, startingMonsters);
         }
         public class EvolveCostOverride
         {

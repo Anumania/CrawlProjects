@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
+    <Compile Include="CustomDeity.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="CustomMonster.cs" />
     <Compile Include="MonsterAPI.cs" />
@@ -51,6 +52,7 @@
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\DumpedAssemblies\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\Crawl_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>

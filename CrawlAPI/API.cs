@@ -26,7 +26,6 @@ namespace CrawlAPI
     {
         void Awake()
         {
-            Console.WriteLine("CrawlAPI Started!");
             //DynamicMethod testMethod = new DynamicMethod("testMethod", typeof(void), null);
             //exAtlas[] array = (exAtlas[])Resources.FindObjectsOfTypeAll(typeof(exAtlas));
             APIHelpers.Init();
@@ -40,6 +39,12 @@ namespace CrawlAPI
 
             UnityEngine.Object[] objects = Resources.FindObjectsOfTypeAll(typeof(UnityEngine.Object));
 
+            GameObject noConsole = new GameObject();
+            noConsole.AddComponent<NoConsole>();
+            GameObject.DontDestroyOnLoad(noConsole);
+
+            SystemDebug.AddDebugItem("I - Player", "change to debug char", new Action(this.changeToTestChar));
+
             List<Type> objList = new List<Type>();
             foreach (UnityEngine.Object i in objects)
             {
@@ -49,23 +54,20 @@ namespace CrawlAPI
                     //Console.WriteLine(i.GetType());
                 }
             }
+
+            CustomDeity testDeity = new CustomDeity();
+            testDeity.SetToDefaults();
+            AddDeity(testDeity);
             //SystemDeity bigDeity = (SystemDeity)Resources.FindObjectsOfTypeAll(typeof(SystemDeity)).FirstOrDefault();
             On.SystemMain.Awake += (a, b) =>
             {
-                Console.WriteLine("ueah");
-                GameObject noConsole = new GameObject();
-                noConsole.AddComponent<NoConsole>();
-                GameObject.DontDestroyOnLoad(noConsole);
 
-                SystemDebug.AddDebugItem("I - Player", "change to debug char", new Action(this.changeToTestChar));
+                
                 
                 //exAtlas modAtlas = new exAtlas();
                 try
                 {
-                    CustomDeity testDeity = new CustomDeity();
-                    testDeity.SetToDefaults();
-                    //Console.WriteLine(testDeity.ToString());
-                    AddDeity(testDeity);
+
 
                     exAtlas modAtlas = ScriptableObject.CreateInstance<exAtlas>();
                     //DontDestroyOnLoad(modAtlas);

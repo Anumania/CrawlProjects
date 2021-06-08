@@ -7,6 +7,7 @@ using CrawlAPI;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using Mono.Collections.Generic;
+using UnityEngine;
 
 namespace DebugMode
 {
@@ -16,6 +17,7 @@ namespace DebugMode
         void Awake()
         {
             APIHelpers.Init();
+            Console.WriteLine("Debug Mode Mod Enabled");
             //GameObject a = new GameObject();
             //a.AddComponent<SystemDebug>();
             //GameObject.DontDestroyOnLoad(a);
@@ -27,13 +29,14 @@ namespace DebugMode
 
         private void SystemDebug_Update(ILContext il)
         {
-            il.IL.Body.Instructions[42].Operand = 92;
+            //Console.WriteLine(il.IL.Body.Instructions[36].Operand);
+            //il.IL.Body.Instructions[42].Operand = 92; //changing the key needed for debug mode
         }
 
         private void SystemLevel_Start(On.SystemLevel.orig_Start orig, SystemLevel self)
         {
             orig(self);
-            //SystemDebug.AddDebugItem("I-Player","Add gold", new Action(this.AddGold));
+            SystemDebug.AddDebugItem("I-Player","Add gold", new Action(this.AddGold));
         }
 
         private void SystemDebug_Awake(ILContext il)

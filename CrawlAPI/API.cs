@@ -26,7 +26,8 @@ namespace CrawlAPI
     {
         void Awake()
         {
-            DynamicMethod testMethod = new DynamicMethod("testMethod", typeof(void), null);
+            Console.WriteLine("CrawlAPI Started!");
+            //DynamicMethod testMethod = new DynamicMethod("testMethod", typeof(void), null);
             //exAtlas[] array = (exAtlas[])Resources.FindObjectsOfTypeAll(typeof(exAtlas));
             APIHelpers.Init();
             MonsterAPI.Init();
@@ -51,7 +52,7 @@ namespace CrawlAPI
             //SystemDeity bigDeity = (SystemDeity)Resources.FindObjectsOfTypeAll(typeof(SystemDeity)).FirstOrDefault();
             On.SystemMain.Awake += (a, b) =>
             {
-
+                Console.WriteLine("ueah");
                 GameObject noConsole = new GameObject();
                 noConsole.AddComponent<NoConsole>();
                 GameObject.DontDestroyOnLoad(noConsole);

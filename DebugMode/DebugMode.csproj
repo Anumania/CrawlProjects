@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,78 +32,43 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>..\lib\0Harmony.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="0Harmony20">
-      <HintPath>..\lib\0Harmony20.dll</HintPath>
-      <Private>False</Private>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\DumpedAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\BepInEx.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx.Harmony">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\BepInEx.Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="BepInEx.Preloader">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\BepInEx.Preloader.dll</HintPath>
-    </Reference>
-    <Reference Include="CrawlAPI">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\plugins\CrawlAPI\CrawlAPI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="ex2D.Runtime">
-      <HintPath>..\lib\ex2D.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="HarmonyXInterop">
-      <HintPath>..\lib\HarmonyXInterop.dll</HintPath>
+    <Reference Include="MMHOOK_Assembly-CSharp">
+      <HintPath>..\lib\MMHOOK_Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\Mono.Cecil.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="MonoMod.RuntimeDetour">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\MonoMod.RuntimeDetour.dll</HintPath>
+    <Reference Include="Mono.Security">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\Crawl_Data\Managed\Mono.Security.dll</HintPath>
     </Reference>
     <Reference Include="MonoMod.Utils">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\MonoMod.Utils.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\Crawl_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>..\lib\UnityEngine.Networking.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\lib\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityScript.Lang">
-      <HintPath>..\lib\UnityScript.Lang.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <ProjectReference Include="..\CrawlAPI\CrawlAPI.csproj">
+      <Project>{7c459487-520d-46c0-8114-3f0cd08133bc}</Project>
+      <Name>CrawlAPI</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

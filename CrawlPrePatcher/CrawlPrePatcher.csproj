@@ -58,6 +58,7 @@
     </Reference>
     <Reference Include="CrawlAPI">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\plugins\CrawlAPI\CrawlAPI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="HarmonyXInterop">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\HarmonyXInterop.dll</HintPath>
@@ -99,14 +100,8 @@
     <Reference Include="System.Data.DataSetExtensions">
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.CSharp">
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Data">
       <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Net.Http">
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml">
       <Private>False</Private>

@@ -62,7 +62,7 @@ namespace CrawlAPI
                 BotHero obj = FindObjectOfType<BotHero>();
                 if (obj != null)
                 {
-                    GUI.Label(new Rect(0, 0, 100, 20), obj.get);
+                    //GUI.Label(new Rect(0, 0, 100, 20), obj.get);
                 }
                 else
                 {

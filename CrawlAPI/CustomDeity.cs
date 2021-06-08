@@ -47,14 +47,14 @@ namespace CrawlAPI
                 }
                 else
                 {
-                    Console.WriteLine("oops");
+                    Console.WriteLine("oops" + fieldInfo.Name);
                 }
             }
         }
         //text
         public string m_name = "testDeity";
         public string m_text = "no idea what this is";
-        public string m_textFlavor = "flavor text";
+        public string m_textFlavour = "flavor text";
 
         //anim
         public exSpriteAnimClip m_portrait;

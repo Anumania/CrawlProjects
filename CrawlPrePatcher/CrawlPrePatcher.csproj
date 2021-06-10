@@ -56,10 +56,6 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\BepInEx.Preloader.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="CrawlAPI">
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\plugins\CrawlAPI\CrawlAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="HarmonyXInterop">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Crawl\BepInEx\core\HarmonyXInterop.dll</HintPath>
       <Private>False</Private>

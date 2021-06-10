@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace CrawlAPI
 {
-    public class CustomDeity
+    public class CustomDeity  //entirely public version of the Deity class, edit whatever variables you want, then when you add this through DeityAPI, its converted to a real deity.
     {
         public CustomDeity()
         {
@@ -36,7 +36,6 @@ namespace CrawlAPI
             //FieldInfo[] targetFieldInfo = typeof(Deity).GetFields(BindingFlags.Instance | BindingFlags.NonPublic); //reference to field info of the class
             FieldInfo[] thisFieldInfo = typeof(CustomDeity).GetFields(BindingFlags.Instance | BindingFlags.Public); //reference to the field info here
             Deity inst = SystemDeity.GetDeity(0); //hold this bc its referenced a ton
-            Console.WriteLine(inst);
             foreach(FieldInfo fieldInfo in thisFieldInfo)
             {
                 FieldInfo targetFieldInfo = typeof(Deity).GetField(fieldInfo.Name, BindingFlags.Instance | BindingFlags.NonPublic);

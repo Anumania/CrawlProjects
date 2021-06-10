@@ -50,19 +50,6 @@ namespace CrawlAPI
                     //Console.WriteLine(i.GetType());
                 }
             }
-            
-            
-            //SystemDeity bigDeity = (SystemDeity)Resources.FindObjectsOfTypeAll(typeof(SystemDeity)).FirstOrDefault();
-           
-                
-            /*for (int i = 0; i < 10; i++)
-            {
-                CustomDeity testDeity = new CustomDeity(); //done at main menu start or null reference crash?
-                testDeity.SetToDefaults();
-                testDeity.m_name = "test deity!";
-                testDeity.m_text = "test deity! ";
-                AddDeity(testDeity);
-            }*/
             Console.WriteLine(SystemDeity.GetTrialDeity(0));
 
 
@@ -106,15 +93,16 @@ namespace CrawlAPI
 
                 monst.m_animationIdle.frameInfos[0].atlas.texture = modAtlasTexture;
 
-                MonsterAPI.AddMonster(monst);
+                
 
 
                 CustomDeity testman = new CustomDeity();
                 testman.SetToDefaults();
                 testman.m_text = "im test";
                 testman.m_textFlavour = "im also test";
-                DeityAPI.AddDeity(testman);
-                DeityAPI.AddDeity(testman);
+                testman.m_name = "TEST";
+
+                MonsterAPI.AddMonster(monst, ref testman, 0);
                 DeityAPI.AddDeity(testman);
 
                     
@@ -180,20 +168,5 @@ namespace CrawlAPI
             Debug.developerConsoleVisible = false;
         }
     }
-    public class MenuDeitySelectPlayerExtension : MonoBehaviour //adding additional methods to MenuDeitySelectPlayer
-    {
-        public GameObject trialsMenu;
-        public GameObject trialsText;
-        public void Awake()
-        {
-           
-        }
-        public void MsgOnSelectModDeities()
-        {
-            Console.WriteLine("Deity Mod Menu selected");
-            
-            base.SendMessageUpwards("MsgQueueState", "DeityModdedSelect");
-
-        }
-    }
+    
 }

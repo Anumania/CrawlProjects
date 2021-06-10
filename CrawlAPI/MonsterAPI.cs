@@ -21,12 +21,50 @@ namespace CrawlAPI
             return monsters.Where(e => e.name == monsterName).FirstOrDefault();
         }
 
-        public static void AddMonster(CustomMonster monst)
+        public static void AddMonster(CustomMonster monst, ref CustomDeity deity, int slotIndex) //just in case you want to not just say deity.m_startingMonsters[0] = monst?
         {
-            Deity bart = SystemDeity.GetDeity(0);
+            CustomDeity bart = deity;
+            GameObject[] startingMonsters = deity.m_startingMonsters;
+
+            Player p = startingMonsters[slotIndex].GetComponent<Player>();
+            //a.SetActive(true);
+            foreach (var field in monst.GetType().GetFields())
+            {
+                //Console.WriteLine(field.Name);
+                FieldInfo fldInfo = p.GetType().GetField(field.Name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                if (fldInfo == null)
+                {
+                    continue;
+                }
+                if (fldInfo.Name == "m_evolveToCostOverride")
+                {
+                    Player.EvolveCostOverride[] e = EvolveCostOverride.convert((EvolveCostOverride[])field.GetValue(monst));
+
+                    fldInfo.SetValue(p, e);
+                }
+                else
+                {
+                    try
+                    {
+                        fldInfo.SetValue(p, field.GetValue(monst));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        fldInfo.SetValue(p, null);
+                    }
+                }
+            }
+            deity.m_startingMonsters = startingMonsters;
+            //APIHelpers.PrintPlayer(p);
+            //bart.GetType().GetField("m_startingMonsters", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(bart, startingMonsters);
+        }
+        public static void AddMonster(CustomMonster monst, ref Deity deity, int slotIndex)
+        {
+            Deity bart = deity; //lol
             GameObject[] startingMonsters = bart.GetStartingMonsters();
 
-            Player p = startingMonsters[0].GetComponent<Player>();
+            Player p = startingMonsters[slotIndex].GetComponent<Player>();
             //a.SetActive(true);
             foreach (var field in monst.GetType().GetFields())
             {

@@ -6,7 +6,10 @@ IF YOURE INSTALLING MODS:
 IF YOURE TRYING TO MAKE MODS:
   sorry.
   
+
+
 My collection of crawl mods:
+
   AtlasImporter: allows you to replace almost every atlas in the game, allowing for retexturing of ui elements or enemies. (Does not allow for ADDING of sprites, only replacing)
 
   CrawlAPI: an ongoing series of functions and classes designed to allow modders to add content into the game, in a way that allows people to use multiple mods without conflict

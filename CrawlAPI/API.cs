@@ -17,15 +17,28 @@ using Newtonsoft.Json;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
 using System.Reflection.Emit;
-
+using System.Diagnostics;
 
 namespace CrawlAPI
 {
     [BepInPlugin("org.anumania.plugins.crawlapi", "CrawlAPI", "1.0.0.0")]
     public class CrawlAPI : BaseUnityPlugin
     {
-        void Awake()
+        public void Awake()
         {
+            //TODO: figure out how to fix stack traces/
+            //probable causes: loading by bepin causes mono to forget where pdb is.(very probable)
+            //version difference (use mono to compile instead of ms.net)
+            //unity doesnt like debugging (no because it still shows SOME line info later in the stack)
+            //StackTrace st = new StackTrace(true);
+            //Console.WriteLine(System.Environment.);
+            //TypeReference thevoid = AssemblyDefinition.ReadAssembly("C:\\Program Files (x86)\\Steam\\steamapps\\common\\Crawl\\BepInEx\\plugins\\CrawlAPI\\CrawlAPI.dll").MainModule.ImportReference(typeof(void));
+            //ISymbolReader sr = new Mono.Cecil.Pdb.NativePdbReaderProvider().GetSymbolReader(AssemblyDefinition.ReadAssembly("C:\\Program Files (x86)\\Steam\\steamapps\\common\\Crawl\\BepInEx\\plugins\\CrawlAPI\\CrawlAPI.dll").MainModule, "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Crawl\\BepInEx\\plugins\\CrawlAPI\\CrawlAPI.pdb");
+            //Console.WriteLine(sr.Read(new MethodDefinition("Awake",Mono.Cecil.MethodAttributes.Public,thevoid)));
+            //Console.WriteLine(new MethodDefinition("Awake", Mono.Cecil.MethodAttributes.Public, thevoid).Name);
+
+            //Console.WriteLine(st.GetFrame(0));
+            //System.Diagnostics.
             //exAtlas[] array = (exAtlas[])Resources.FindObjectsOfTypeAll(typeof(exAtlas));
             APIHelpers.Init();
             MonsterAPI.Init();
@@ -50,7 +63,7 @@ namespace CrawlAPI
                     //Console.WriteLine(i.GetType());
                 }
             }
-            Console.WriteLine(SystemDeity.GetTrialDeity(0));
+            //Console.WriteLine(SystemDeity.GetTrialDeity(0));
 
 
             //exAtlas modAtlas = new exAtlas();

@@ -21,7 +21,7 @@ namespace CrawlAPI
             return monsters.Where(e => e.name == monsterName).FirstOrDefault();
         }
 
-        public static void AddMonster(CustomMonster monst, ref CustomDeity deity, int slotIndex) //just in case you want to not just say deity.m_startingMonsters[0] = monst?
+        public static void AddMonster(this CustomDeity deity, CustomMonster monst, int slotIndex) //just in case you want to not just say deity.m_startingMonsters[0] = monst?
         {
             CustomDeity bart = deity;
             GameObject[] startingMonsters = deity.m_startingMonsters;
@@ -59,7 +59,7 @@ namespace CrawlAPI
             //APIHelpers.PrintPlayer(p);
             //bart.GetType().GetField("m_startingMonsters", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(bart, startingMonsters);
         }
-        public static void AddMonster(CustomMonster monst, ref Deity deity, int slotIndex)
+        public static void AddMonster(this Deity deity, CustomMonster monst, int slotIndex) //extension method for adding monsters to deity
         {
             Deity bart = deity; //lol
             GameObject[] startingMonsters = bart.GetStartingMonsters();

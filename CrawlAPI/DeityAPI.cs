@@ -8,13 +8,8 @@ using UnityEngine;
 
 namespace CrawlAPI
 {
-    class DeityAPI
+    public class DeityAPI
     {
-        public static void bruh()
-        {
-            Console.WriteLine("skruh");
-            throw new Exception("aaaa");
-        }
         //TODO: standardize either the use of "custom deity" or "modded deity" terminology in the api;
         public static List<Deity> customDeities;
         public static List<MenuDeitySelectPlayer> deitySelectMenu;

@@ -63,68 +63,6 @@ namespace CrawlAPI
                     //Console.WriteLine(i.GetType());
                 }
             }
-            //Console.WriteLine(SystemDeity.GetTrialDeity(0));
-
-
-            //exAtlas modAtlas = new exAtlas();
-            try
-            {
-                exAtlas modAtlas = ScriptableObject.CreateInstance<exAtlas>();
-                Texture2D modAtlasTexture = new Texture2D(2048, 2048);
-                byte[] array2 = File.ReadAllBytes("./Crawl_Textures/bruh.png");
-                modAtlasTexture.LoadImage(array2);
-                Console.WriteLine("loaded!");
-                modAtlas.name = "modAtlasTexture";
-                modAtlas.texture = modAtlasTexture;
-                modAtlas.elements = new exAtlas.Element[1];
-                modAtlas.elements[0] = new exAtlas.Element();
-                modAtlas.elements[0].name = "test";
-                modAtlas.elements[0].coords = new Rect(0, 0, 4, 4);
-                modAtlas.elements[0].originalHeight = 64;
-                modAtlas.elements[0].originalWidth = 64;
-                modAtlas.elements[0].trimRect = new Rect(0, 0, 31, 31);
-                CustomMonster monst = new CustomMonster();
-                monst.SetToDefaults();
-                Material matt = monst.m_animationIdle.frameInfos[0].atlas.material;
-                Material matthew = new Material(matt);
-                matthew.mainTexture = modAtlas.texture;
-                foreach (exAtlas mat in Resources.FindObjectsOfTypeAll(typeof(exAtlas)))
-                {
-                    if (mat.name == "AtlasMonsters")
-                    {
-                            
-                        //mat.SetTexture(name)
-                            
-                        //Console.WriteLine("bruh");
-                        //monst.m_animationIdle.frameInfos[0].atlas.material = mat;
-                        //mat.mainTexture = modAtlasTexture;
-                    }
-                }
-                monst.m_animationIdle.frameInfos[0].atlas = modAtlas;
-                monst.m_animationIdle.frameInfos[0].index = 0;
-                monst.m_animationIdle.frameInfos[0].atlas.material = matthew;
-
-                monst.m_animationIdle.frameInfos[0].atlas.texture = modAtlasTexture;
-
-                
-
-
-                CustomDeity testman = new CustomDeity();
-                testman.SetToDefaults();
-                testman.m_text = "im test";
-                testman.m_textFlavour = "im also test";
-                testman.m_name = "TEST";
-
-                MonsterAPI.AddMonster(monst, ref testman, 0);
-                DeityAPI.AddDeity(testman);
-
-                    
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            
             On.MenuDeitySelectPlayer.Start += MenuDeitySelectPlayer_Start;
             IL.MenuDeitySelectPlayer.Update += IL_MenuDeitySelectPlayer_Update;
             On.MenuDeitySelectPlayer.Update += MenuDeitySelectPlayer_Update;
@@ -181,5 +119,4 @@ namespace CrawlAPI
             Debug.developerConsoleVisible = false;
         }
     }
-    
 }

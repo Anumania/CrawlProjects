@@ -63,12 +63,5 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CrawlAPI\CrawlAPI.csproj">
-      <Project>{7c459487-520d-46c0-8114-3f0cd08133bc}</Project>
-      <Name>CrawlAPI</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
